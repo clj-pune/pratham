@@ -1,4 +1,5 @@
-(ns clj-pune.pratham.p03-functions-and-controls)
+(ns clj-pune.pratham.p03-functions-and-controls
+  (:require [clojure.repl :refer [doc source]]))
 
 ;; These two are equivalent
 ;; Both return their arguments
@@ -153,3 +154,37 @@
 
 ;(cgpa :A)
 ;(cgpa :zzzzz)
+
+;; A Clojure function is just a bunch of nested Clojure Data Structures:
+(defn make-set-of-3
+  "Given 3 inputs, return a set of them."
+  [a b c]           ; arg-list vector
+  ;; body of the function follows
+  (hash-set a b c))
+
+(make-set-of-3 :a "b" 42)
+(eval (list 'defn 'make-set-of-3-more
+            "Make set of 3."
+            ['a 'b 'c]
+            (list 'hash-set 'a 'b 'c)))
+(make-set-of-3-more "this" :works 2)
+
+(defn a-well-decorated-function
+  "Well documented function"
+  {:private true
+   :author "Donald Duck"}
+  [i c u]
+  {:pre (true)}
+  "I am a happy function because I ignore all arguments!")
+
+; (a-well-decorated-function 1 2 3)
+; (meta #'a-well-decorated-function)
+
+;; What is #'a-well-decorated-function ?
+; (class #'a-well-decorated-function)
+; (class a-well-decorated-function)
+
+(class #'+)
+(class +)
+(source +)
+(doc +)

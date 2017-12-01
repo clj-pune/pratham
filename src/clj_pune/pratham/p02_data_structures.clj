@@ -4,16 +4,16 @@
 
 ;; Let's re-visit Earth, and launch into space...
 ;; to discover the variety and power of Clojure's Alien data structures.
-{:name "Earth"
- :mass 1
- :radius 1
- :moons 1
- :atmosphere {:nitrogen 78.08
-              :oxygen 20.95
-              :CO2 0.4
+{:name       "Earth"
+ :mass       1
+ :radius     1
+ :moons      1
+ :atmosphere {:nitrogen     78.08
+              :oxygen       20.95
+              :CO2          0.4
               :water-vapour 0.1
-              :other-gases {:argon 0.37
-                            :traces 0.10}}}
+              :other-gases  {:argon  0.37
+                             :traces 0.10}}}
 
 ;; Numbers
 1
@@ -31,11 +31,10 @@
 :mas$
 :42
 
-
 ;; Vectors
 (vector 1 2 3)
 
-[1 2 3] ; "literal" form of vectors
+[1 2 3]             ; "literal" form of vectors
 
 ["a" "b" "c"]
 
@@ -50,9 +49,9 @@
 ;; Hash-maps
 (hash-map :name "Earth" :mass 1 :moons 1)
 
-{:name "Earth"
- :mass 1
- :moons 1} ; "literal" hash-map
+{:name  "Earth"
+ :mass  1
+ :moons 1}          ; "literal" hash-map
 
 
 ;; Hash-maps are very flexible...
@@ -62,8 +61,8 @@
 
    {:name "Earth", :mass 1, :moons 1}
 
-   {:name "Earth"
-    :mass 1
+   {:name  "Earth"
+    :mass  1
     :moons 1})
 
 ;; Hash-maps: are NOT ordered.
@@ -79,7 +78,7 @@
 
 
 ;; Hash-maps: can themselves be used as look-up functions of keys
-({:a 1 :b 2}  :b)
+({:a 1 :b 2} :b)
 
 ({"a" 1 :b 2} "a")
 
@@ -95,14 +94,20 @@
 
 
 ;; Sets let us test for membership:
-(get #{1 2 3} 1) ; returns 1
+(get #{1 2 3} 1)    ; returns 1
 (get #{1 2 3} "hello") ; returns nil, when member not found
+
+; What does the following do?
+; (get #{1 2 3} "hello" "hola!")
 
 ;; Sets can directly be used as membership functions,
 ;; because, membership test is such a basic, pervasive use of sets.
 (#{1 2 3} 1)
 
 (#{1 2 3} "hello")
+
+; What does the following do?
+; (#{1 2 3} "hello" "hola!")
 
 
 ;; Sets are un-ordered. We only care about membership.
@@ -112,7 +117,6 @@
    #{1 2 3})
 
 
-
 ;; BOOM!
 ;; We can mix-and-match almost anything inside collections:
 
@@ -120,30 +124,15 @@
 
 #{1 :foo {"bar" "baz"}}
 
-{:a 42
- 2 "me-too"
- [:b] "such vector"
+{:a     42
+ 2      "me-too"
+ [:b]   "such vector"
  {:c 1} "much map"
- "wow" #{"this" :is 2 :crazy}}
-
-
-;; BOOOOOOOOOMMMMMMMMM!!!!
-;; A Clojure function is just a bunch of nested Clojure Data Structures:
-(defn make-set-of-3
-  "Given 3 inputs, return a set of them."
-  [a b c] ; arg-list vector
-  ;; body of the function follows
-  (hash-set a b c))
-
-(make-set-of-3 :a "b" 42)
+ "wow"  #{"this" :is 2 :crazy}}
 
 
 ;; Seriously
 
-'a-clojure-symbol ; yet another Clojure primitive
+'a-clojure-symbol   ; yet another Clojure primitive
 
 (list "I" :am "a" 'clojure-list)
-
-(eval (list 'defn 'make-set-of-3-more "Make set of 3." ['a 'b 'c] (list 'hash-set 'a 'b 'c)))
-
-(make-set-of-3-more "this" :works 2)
