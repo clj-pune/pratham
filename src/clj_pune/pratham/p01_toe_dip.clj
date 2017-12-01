@@ -126,24 +126,3 @@
 
 ;; By the way, our function works with keywords too!
 (get-level-3 earth-alt :atmosphere :other-gases :argon)
-
-
-
-
-;; EXTRAS
-
-;; What's special about keywords?
-;; they are _also_ callable and runnable and can look
-;;   themselves up if used as keys in a hash-map
-(class :name)
-(supers (class :name))
-
-;; Clojure strings are not special...
-;; they're actually just Java strings
-(class "name")
-(supers (class "name"))
-
-
-;; MAGIC!
-(-> earth-alt :atmosphere :other-gases :traces)
-(-> earth-alt :atmosphere :other-gases :argon)
