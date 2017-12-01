@@ -11,7 +11,8 @@
 ;;              "oxygen"       20.95
 ;;              "CO2"           0.40
 ;;              "water-vapour"  0.10
-;;              "other-gases"   0.47
+;;              "other-gases"   "argon"  0.33
+;;                              "traces" 0.14
 
 
 ;; Looks like JSON? We call it a "hash-map."
@@ -24,14 +25,15 @@
                "oxygen"       20.95
                "CO2"           0.40
                "water-vapour"  0.10
-               "other-gases"   0.47}}
+               "other-gases"  {"argon"  0.33
+                               "traces" 0.14}}}
 
 
-;; Let's query the Earth
+;; Let's query the Earth.
 
 
-;; But first, let's define a global called 'earth'
-;; (Warning: 'def' is an anti-pattern in Clojure.)
+;; But first, let's create a global called 'earth', for our convenience.
+;; (Warning: global 'def's are an anti-pattern in Clojure.)
 (def earth {"name" "Earth"
             "mass" 1
             "radius" 1
@@ -40,8 +42,8 @@
                           "oxygen"       20.95
                           "CO2"           0.40
                           "water-vapour"  0.10
-                          "other-gases"   {"argon" 0.37
-                                           "traces" 0.10}}})
+                          "other-gases"   {"argon"  0.33
+                                           "traces" 0.14}}})
 
 
 ;; _Now_ let's query the 'earth' global
@@ -98,9 +100,9 @@
                 :atmosphere {:nitrogen 78.08
                              :oxygen 20.95
                              :CO2 0.4
-                             :water-vapour 0.1
-                             :other-gases {:argon 0.37
-                                           :traces 0.10}}})
+                             :water-vapour 0.10
+                             :other-gases {:argon 0.33
+                                           :traces 0.14}}})
 
 ;; Easier top-level access
 (:name earth-alt)
