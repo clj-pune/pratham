@@ -184,7 +184,7 @@
 ; (class #'a-well-decorated-function)
 ; (class a-well-decorated-function)
 
-(class #'+)
-(class +)
-(source +)
-(doc +)
+;(class #'+)
+;(class +)
+;(source +)
+;(doc +)
