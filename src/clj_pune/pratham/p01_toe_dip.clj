@@ -112,13 +112,17 @@
 ;; Easier nested access
 (:argon (:other-gases (:atmosphere earth-alt)))
 
+;; By the way, our function works with keywords too!
+(get-level-3 earth-alt :atmosphere :other-gases :argon)
+
+
+
 
 ;; But nested access is so common, we can use Clojure's 'get-in',
 ;; which is the cousin of 'get' (and the granddaddy of get-level-3 ;-)
 (get-in earth-alt [:atmosphere])
 (get-in earth-alt [:atmosphere :other-gases])
 (get-in earth-alt [:atmosphere :other-gases :argon])
-
 
 ;; Try replacing the keywords with strings, like:
 (get-in earth-alt ["atmosphere"])
