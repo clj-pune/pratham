@@ -131,8 +131,19 @@
 ;; A Clojure function is just a bunch of nested Clojure Data Structures:
 (defn make-set-of-3
   "Given 3 inputs, return a set of them."
-  [a b c] ; arg-list
+  [a b c] ; arg-list vector
   ;; body of the function follows
   (hash-set a b c))
 
 (make-set-of-3 :a "b" 42)
+
+
+;; Seriously
+
+'a-clojure-symbol ; yet another Clojure primitive
+
+(list "I" :am "a" 'clojure-list)
+
+(eval (list 'defn 'make-set-of-3-more "Make set of 3." ['a 'b 'c] (list 'hash-set 'a 'b 'c)))
+
+(make-set-of-3-more "this" :works 2)
