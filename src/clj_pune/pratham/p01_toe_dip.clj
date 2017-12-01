@@ -82,16 +82,16 @@
 
 
 
-;; Clojure has an interesting thing called "keywords"
-;; Think of these as strings on steroids that can do special things
+;; Clojure has an interesting thing called 'keywords'.
+;; Think of these as strings on steroids, that can do special things.
 ;; We'll see what...
-"name" ; a string (evaluates) to itself
-:name  ; a keyword evaluates to itself
+"name" ; a string
+:name  ; a keyword
 
 
 ;; An alternate form of the earth hash-map, with keywords as keys...
 ;; - that represents the same data,
-;; - which is far more convenient to query because of the
+;; - and is far more convenient to query because of the
 ;;   special properties of keywords
 (def earth-alt {:name "Earth"
                 :mass 1
@@ -119,8 +119,9 @@
 (get-in earth-alt [:atmosphere :other-gases])
 (get-in earth-alt [:atmosphere :other-gases :argon])
 
-;; Try replacing the keywords with strings
-;; like, (get-in earth-alt ["atmosphere"])
+
+;; Try replacing the keywords with strings, like:
+(get-in earth-alt ["atmosphere"])
 
 
 ;; By the way, our function works with keywords too!
