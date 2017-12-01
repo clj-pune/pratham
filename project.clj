@@ -6,4 +6,5 @@
   :plugins [[nightlight/lein-nightlight "2.0.1"]]
   :dependencies [[org.clojure/clojure "1.9.0-RC2"]
                  [org.clojure/clojurescript "1.9.946"]
+                 [cheshire "5.8.0"]
                  [nightlight "2.0.1"]])
