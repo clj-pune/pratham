@@ -14,7 +14,7 @@
 ;;              "other-gases"   0.47
 
 
-;; Looks like JSON? We call it a hash-map.
+;; Looks like JSON? We call it a "hash-map."
 
 {"name" "Earth"
  "mass" 1
@@ -30,61 +30,108 @@
 ;; Let's query the Earth
 
 
-;; Note: Inside the 'let' expression below, we have bound 'planet'
-;; to our hash-map.
-;; For now, just know that a Clojure 'let' creates a local scope
-;; within which to name and evaluate things. Ignore the meaning
-;; of the square brackets, for now.
-(let [planet {"name" "Earth"
-              "mass" 1
-              "radius" 1
-              "moons" 1
-              "atmosphere" {"nitrogen"     78.08
-                            "oxygen"       20.95
-                            "CO2"           0.40
-                            "water-vapour"  0.10
-                            "other-gases"   0.47}}]
-  ;; top-level access
-  (get planet "name"))
-;; (get planet "mass")
-;; (get planet "moons")
-;; nested access
-;; (get-in planet ["atmosphere" "oxygen"])
-;; (get-in planet ["name"]) ; also is valid
+;; But first, let's define a global called 'earth'
+;; (Warning: 'def' is an anti-pattern in Clojure.)
+(def earth {"name" "Earth"
+            "mass" 1
+            "radius" 1
+            "moons" 1
+            "atmosphere" {"nitrogen"     78.08
+                          "oxygen"       20.95
+                          "CO2"           0.40
+                          "water-vapour"  0.10
+                          "other-gases"   {"argon" 0.37
+                                           "traces" 0.10}}})
 
 
-;; Note: above, the return value of the let expression is the
-;; value of the _last_ thing evaluated.
+;; _Now_ let's query the 'earth' global
 
 
-;; Another form of the hash-map that represents the same data,
-;; BUT, with the keys "keyword-ised"
-;; AND, which is far more convenient to query... but why?
-(let [planet {:name "Earth",
-              :mass 1,
-              :radius 1,
-              :moons 1,
-              :atmosphere
-              {:nitrogen 78.08,
-               :oxygen 20.95,
-               :CO2 0.4,
-               :water-vapour 0.1,
-               :other-gases 0.47}}]
+;; Top-level access
+(get earth "name")
+(get earth "mass")
+(get earth "moons")
 
-  ;; easier top-level access
-  (:name planet)
-  (:mass planet)
-  (:radius planet)
+;; Nested access
+(get
+ (get earth "atmosphere")
+ "other-gases")
 
-  ;; nested access
-  (:oxygen (:atmosphere planet))
-  (get-in planet [:atmosphere :oxygen]))
+;; Even more nested access
+(get
+ (get
+  (get earth "atmosphere")
+  "other-gases")
+ "argon")
 
 
-;; keywords are special in Clojure...
-;; they evaluate to themselves, like strings do
-;; BUT they are _also_ callable and runnable and can look
-;; themselves up if used as keys in a hash-map
+;; Let's make our own function to access any "third" level value
+(defn get-level-3 [planet level1-key level2-key level3-key]
+  (get
+   (get
+    (get planet level1-key)
+    level2-key)
+   level3-key))
+
+
+;; Now we can...
+(get-level-3 earth "atmosphere" "other-gases" "argon")
+(get-level-3 earth "atmosphere" "other-gases" "traces")
+
+
+
+;; Clojure has an interesting thing called "keywords"
+;; Think of these as strings on steroids that can do special things
+;; We'll see what...
+"name" ; a string (evaluates) to itself
+:name  ; a keyword evaluates to itself
+
+
+;; An alternate form of the earth hash-map, with keywords as keys...
+;; - that represents the same data,
+;; - which is far more convenient to query because of the
+;;   special properties of keywords
+(def earth-alt {:name "Earth"
+                :mass 1
+                :radius 1
+                :moons 1
+                :atmosphere {:nitrogen 78.08
+                             :oxygen 20.95
+                             :CO2 0.4
+                             :water-vapour 0.1
+                             :other-gases {:argon 0.37
+                                           :traces 0.10}}})
+
+;; Easier top-level access
+(:name earth-alt)
+(:mass earth-alt)
+(:radius earth-alt)
+
+;; Easier nested access
+(:argon (:other-gases (:atmosphere earth-alt)))
+
+
+;; But nested access is so common, we can use Clojure's 'get-in',
+;; which is the cousin of 'get' (and the granddaddy of get-level-3 ;-)
+(get-in earth-alt [:atmosphere])
+(get-in earth-alt [:atmosphere :other-gases])
+(get-in earth-alt [:atmosphere :other-gases :argon])
+
+;; Try replacing the keywords with strings
+;; like, (get-in earth-alt ["atmosphere"])
+
+
+;; By the way, our function works with keywords too!
+(get-level-3 earth-alt :atmosphere :other-gases :argon)
+
+
+
+
+;; EXTRAS
+
+;; What's special about keywords?
+;; they are _also_ callable and runnable and can look
+;;   themselves up if used as keys in a hash-map
 (class :name)
 (supers (class :name))
 
@@ -92,3 +139,8 @@
 ;; they're actually just Java strings
 (class "name")
 (supers (class "name"))
+
+
+;; MAGIC!
+(-> earth-alt :atmosphere :other-gases :traces)
+(-> earth-alt :atmosphere :other-gases :argon)
