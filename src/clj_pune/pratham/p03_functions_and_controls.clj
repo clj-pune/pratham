@@ -188,3 +188,8 @@
 ;(class +)
 ;(source +)
 ;(doc +)
+
+; Magic
+; (load-string (slurp (:file (meta #'a-well-decorated-function))))
+; Behind the scenes, the simplicity of the idea is what made the
+; REPL so much possible, and a powerful manner.
